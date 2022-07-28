@@ -88,7 +88,9 @@ AI最基础就是**数学**和**Python**！
 ## Pytorch框架
 
 [PyTorch官方教程中文版](https://pytorch123.com/)
+
 简单入门仓库 [传送门](https://github.com/yunjey/pytorch-tutorial)
+
 PyTorch深度学习实践 [传送门](https://www.bilibili.com/video/BV1Y7411d7Ys?from=search&seid=1631997590037031874&spm_id_from=333.337.0.0)
 
 ## 计算机视觉
