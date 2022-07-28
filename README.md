@@ -94,6 +94,7 @@ PyTorch深度学习实践 [传送门](https://www.bilibili.com/video/BV1Y7411d7Y
 ## 计算机视觉
 
 CS231n [传送门](https://www.bilibili.com/video/BV1nJ411z7fe?from=search&seid=7594775480695125527&spm_id_from=333.337.0.0)
+
 作为入门来说，主要是学习p1-p22;完成作业：1，2 [Github仓库](https://github.com/rishabh-16/cs231n-2019-assignments)
 
 Opencv图像处理实战 [OpenCV中文官方文档](http://woshicver.com/)
