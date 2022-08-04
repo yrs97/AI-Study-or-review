@@ -330,3 +330,89 @@
             ===> 120
             ```
         - 递归调用的次数过多，会导致栈溢出。            
+
+# 高级特性
+
+- 切片
+    - Python提供了切片（Slice）操作符
+    - 取前3个元素。
+        ```
+            >>> L = ['Michael', 'Sarah', 'Tracy', 'Bob', 'Jack']
+            >>> L[0:3]
+            ['Michael', 'Sarah', 'Tracy']
+        ```
+        - `L[0:3]`表示，从索引0开始取，直到索引3为止，但不包括索引3。
+        - `L[-1]`取倒数第一个元素
+        - 第一个索引是0，可以省略.
+- 迭代
+    - 通过for循环来遍历这个list或tuple，这种遍历我们称为迭代（Iteration）       
+    - 默认情况下，dict迭代的是key。
+        - 如果要迭代value，可以用`for value in d.values()`，
+        - 如果要同时迭代key和value，可以用`for k, v in d.items()`
+    - 判断对象是可迭代？
+        - 方法是通过`collections.abc`模块的`Iterable`类型判断
+        ```
+            >>> from collections.abc import Iterable
+            >>> isinstance('abc', Iterable) # str是否可迭代
+                True
+        ```
+    - Python内置的enumerate函数可以把一个list变成索引-元素对.
+        ```
+        >>> for i, value in enumerate(['A', 'B', 'C']):
+                print(i, value)
+            0 A
+            1 B
+            2 C
+        ```
+- 列表生成器
+    - 列表生成式即List Comprehensions
+       - 要生成`list [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`可以用`list(range(1, 11))`：
+       ```
+       >>> list(range(1, 11))
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+       ```
+    - **一语话语句**
+        ```
+        >>> [x * x for x in range(1, 11)]
+            [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+        ```
+        - 列表生成式时，把要生成的元素x * x放到前面，后面跟for循环，就可以把list创建出来
+        - for循环后面还可以加上if判断.
+            ```
+              >>> [x * x for x in range(1, 11) if x % 2 == 0]
+                [4, 16, 36, 64, 100]
+            ```
+        - 还可以使用两层循环.
+            ```
+              >>> [m + n for m in 'ABC' for n in 'XYZ']
+                ['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+            ```            
+        - `if ... else`一句话
+            ```
+            >>> [x if x % 2 == 0 else -x for x in range(1, 11)]
+                [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10]
+            ```
+        - **在一个列表生成式中，for前面的if ... else是表达式，而for后面的if是过滤条件，不能带else。**
+- 生成器
+    - Python中，这种一边循环一边计算的机制，称为生成器：generator。
+        - 不用浪费内存将所有内容都输出。
+    - 第一种方法很简单，只要把一个列表生成式的[]改成()，就创建了一个generator：
+        `g = (x * x for x in range(10))`
+        - 创建L和g的区别仅在于最外层的[]和()，L是一个list，而g是一个generator。
+        - 通过next()函数获得generator的下一个返回值:
+            ```
+               >>> next(g)
+                    0
+               >>> next(g)
+                    1
+              -----------------
+              >>> for n in g:
+                     print(n)
+                 0
+                 1
+            ```
+        - **多次调用generator函数会创建多个相互独立的generator。**
+- 迭代器
+    - 凡是可作用于`for循环`的对象都是`Iterable`类型；
+    - 凡是可作用于`next()`函数的对象都是`Iterator`类型，它们表示一个惰性计算的序列；
+    - 集合数据类型如`list、dict、str`等是`Iterable`但不是`Iterator`，不过可以通过`iter()`函数获得一个`Iterator对象`。        
