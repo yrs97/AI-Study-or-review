@@ -219,3 +219,114 @@
                 {1, 3} 
             ```
         - 两个set可以做数学意义上的交集、并集等操作：`s1 & s2, s1 | s2`
+
+# 函数
+
+- 调用函数
+    - 调用一个函数，需要知道函数的名称和参数
+        - 求绝对值的函数abs，只有一个参数。`abs(-20) = 20`
+        - 函数max()可以接收任意多个参数，并返回最大的那个。 `max(1,2,3) = 3`
+    - 数据类型转换
+        - Python内置的常用函数还包括数据类型转换函数
+        - int()函数可以把其他数据类型转换为整数。    `int(1.1) = 1`
+
+- 定义函数
+    - 在Python中，定义一个函数要使用**def**语句
+        - 依次写出函数名、括号、括号中的参数和冒号:
+        - 在缩进块中编写函数体，
+        - 函数的返回值用return语句返回.
+            ```
+            def my_abs(x):
+                if x >= 0:
+                    return x
+                else:
+                    return -x
+            ```
+    - 导入函数
+        - 把my_abs()的函数定义保存为abstest.py文件
+        - 用from abstest import my_abs来导入my_abs()函数
+            ` from abstest import my_abs `
+            - 注意abstest是文件名（不含.py扩展名）
+    - 空函数
+        - 定义一个什么事也不做的空函数，可以用pass语句：
+        ```
+            def nop():
+                pass
+        ```
+- 函数的参数
+    - 位置参数
+        - 按照位置顺序依次赋的参数. `x, n为位置参数`
+        ```
+          def power(x, n):
+                s = 1
+                while n > 0:
+                    n = n - 1
+                    s = s * x
+                return s
+        ```
+    - 默认参数
+        - 提前为参数设置的默认值。 `def power(x, n=2):`
+            - 调用时，可以不再为默认参数赋值.
+            - **默认参数必须指向不变对象！**
+    - 可变参数
+        - 可变参数就是传入的参数个数是可变的
+            ```
+              def calc(*numbers):
+                sum = 0
+                for n in numbers:
+                    sum = sum + n * n
+                return sum 
+              >>> calc(1, 2, 3)
+                  14
+            ```        
+            - `*numbers`表示把`numbers`这个list的所有元素作为可变参数传进去。
+    - 关键字参数
+        - 关键字参数允许你传入0个或任意个含参数名的参数
+            - 这些关键字参数在函数内部自动组装为一个**dict**
+            ```
+              def person(name, age, **kw):
+                  print('name:', name, 'age:', age, 'other:', kw)
+          --------------------------------------------------------------------
+              >>> person('Adam', 45, gender='M', job='Engineer')
+                  name: Adam age: 45 other: {'gender': 'M', 'job': 'Engineer'}
+            
+              >>> extra = {'city': 'Beijing', 'job': 'Engineer'}
+              >>> person('Jack', 24, **extra)
+                  name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
+            ```
+    - 命名关键字参数
+        - 只接收city和job作为关键字参数.
+            ```
+            def person(name, age, *, city, job):
+                print(name, age, city, job)
+            ```
+            - `*`后面的参数被视为命名关键字参数。
+            - **命名关键字参数必须传入参数名**，这和位置参数不同。    
+            - 命名关键字参数可以有缺省值: `def person(name, age, *, city='Beijing', job):`
+    - 参数组合
+        - 参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数
+            - ```
+              def f2(a, b, c=0, *, d, **kw):
+                  print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+              ```
+- 递归函数
+    - 一个函数在内部调用自身本身，这个函数就是递归函数。
+        - 例如阶乘：
+            ```
+              def fact(n):
+                  if n==1:
+                      return 1
+                  return n * fact(n - 1)
+          ---------------------------------
+            ===> fact(5)
+            ===> 5 * fact(4)
+            ===> 5 * (4 * fact(3))
+            ===> 5 * (4 * (3 * fact(2)))
+            ===> 5 * (4 * (3 * (2 * fact(1))))
+            ===> 5 * (4 * (3 * (2 * 1)))
+            ===> 5 * (4 * (3 * 2))
+            ===> 5 * (4 * 6)
+            ===> 5 * 24
+            ===> 120
+            ```
+        - 递归调用的次数过多，会导致栈溢出。            
